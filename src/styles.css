@@ -1,0 +1,18 @@
+/* You can add global styles to this file, and also import other style files */
+@import "ag-grid-community/dist/styles/ag-grid.css";
+@import "ag-grid-community/dist/styles/ag-theme-alpine.css";
+@import "~bootstrap/dist/css/bootstrap.min.css";
+@font-face {
+font-family: "CorpoS";
+src: url("/assets/fonts/CorpoS/CorpoSRegular.ttf") format("truetype"),
+    url("/assets/fonts/CorpoS/CorpoS.woff") format("woff");
+}
+
+@font-face {
+font-family: "CorpoA";
+src: url("/assets/fonts/CorpoA/CorpoA.ttf") format("truetype"),
+    url("/assets/fonts/CorpoA/CorpoA.woff") format("woff");
+}
+body {
+    font-family: "CorpoS";
+}
