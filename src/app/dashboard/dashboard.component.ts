@@ -5,6 +5,8 @@ import "zingchart/modules-es6/zingchart-maps.min.js";
 import "zingchart/modules-es6/zingchart-maps-usa.min.js";
 import zingchart from 'zingchart/es6';
 import { COLORS } from 'app/models/colors.model';
+import { BlackduckService } from 'app/services/blackduck.service';
+import { JiraService } from 'app/services/jira.service';
 
 
 @Component({
@@ -30,156 +32,127 @@ export class DashboardComponent implements OnInit {
     },
     series: []
   };
+  bdChartConfig = {
+    "type": "bar",
+    "plotarea": {
+        "margin": "dynamic"
+    },
+    "plot": {   
+        "bars-space-left":0.15,
+        "bars-space-right":0.15,
+        "animation": {
+            "effect": "ANIMATION_SLIDE_BOTTOM",
+            "sequence": 0, 
+            "speed": 800,
+            "delay": 800
+        }
+    },
+    "scale-y": {
+        "item": {
+            "font-color": "#7e7e7e"
+        },
+    },
+    "scaleX":{
+        "values": [
+            "License Risk",
+            "Operational Risk",
+            "Security Risk",
+        ],
+        "placement":"default",
+        "tick":{
+            "size":58,
+            "placement":"cross"
+        },
+        "itemsOverlap":true,
+        "item":{
+            "offsetY":-55
+        }
+    },
+    "crosshair-x":{
+        "line-width":"100%",
+        "alpha":0.18,
+        "plot-label":{
+          "header-text":"%kv Sales"
+        }
+    },
+    "series": [
+        {
+            "values": [
+            ],
+            "borderRadiusTopLeft": 7,
+            "alpha": 0.95,
+            "background-color": "orange",
+            "text": "Low"
+        },
+        {
+            "values": [
+            ],
+            "borderRadiusTopLeft": 7,
+            "alpha": 0.95,
+            "background-color": "teal",
+            "text": "Medium"
+        },
+        {
+            "values": [
+            ],
+            "borderRadiusTopLeft": 7,
+            "alpha": 0.95,
+            "background-color": "red",
+            "text": "High"
+        }
+    ]
+};
+
+jiraChartConfig = {
+  "type": "nestedpie",
+  "plot": {
+    "slice-start": "35%"
+  },
+  "series": [{
+      "values": [59, 55, 30]
+    },
+    {
+      "values": [60, 50, 35]
+    },
+    {
+      "values": [50, 40, 30]
+    }
+  ]
+};
+
+g1: any;
+g2: any;
+g3: any;
+g4: any;
+
+sonarChartConfig = {
+  layout: 'horizontal', // Layout ring charts horizontally
+  graphset: [],
+}; 
+
+
+  projects = [];
+  bdMetrics: any;
+  jiraData: any;
 
   constructor(
-    private sonarService: SonarService
+    private sonarService: SonarService,
+    private blackDuckService: BlackduckService,
+    private jiraService: JiraService
   ) {
    }
   
-
-  startAnimationForLineChart(chart){
-      let seq: any, delays: any, durations: any;
-      seq = 0;
-      delays = 80;
-      durations = 500;
-
-      chart.on('draw', function(data) {
-        if(data.type === 'line' || data.type === 'area') {
-          data.element.animate({
-            d: {
-              begin: 600,
-              dur: 700,
-              from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
-              to: data.path.clone().stringify(),
-              easing: Chartist.Svg.Easing.easeOutQuint
-            }
-          });
-        } else if(data.type === 'point') {
-              seq++;
-              data.element.animate({
-                opacity: {
-                  begin: seq * delays,
-                  dur: durations,
-                  from: 0,
-                  to: 1,
-                  easing: 'ease'
-                }
-              });
-          }
-      });
-
-      seq = 0;
-  };
-  startAnimationForBarChart(chart){
-      let seq2: any, delays2: any, durations2: any;
-
-      seq2 = 0;
-      delays2 = 80;
-      durations2 = 500;
-      chart.on('draw', function(data) {
-        if(data.type === 'bar'){
-            seq2++;
-            data.element.animate({
-              opacity: {
-                begin: seq2 * delays2,
-                dur: durations2,
-                from: 0,
-                to: 1,
-                easing: 'ease'
-              }
-            });
-        }
-      });
-
-      seq2 = 0;
-  };
   ngOnInit() {
-    //   /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */
-
-    //   const dataDailySalesChart: any = {
-    //       labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
-    //       series: [
-    //           [12, 17, 7, 17, 23, 18, 38]
-    //       ]
-    //   };
-
-    //  const optionsDailySalesChart: any = {
-    //       lineSmooth: Chartist.Interpolation.cardinal({
-    //           tension: 0
-    //       }),
-    //       low: 0,
-    //       high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-    //       chartPadding: { top: 0, right: 0, bottom: 0, left: 0},
-    //   }
-
-    //   var dailySalesChart = new Chartist.Line('#dailySalesChart', dataDailySalesChart, optionsDailySalesChart);
-
-    //   this.startAnimationForLineChart(dailySalesChart);
-
-
-    //   /* ----------==========     Completed Tasks Chart initialization    ==========---------- */
-
-    //   const dataCompletedTasksChart: any = {
-    //       labels: ['12p', '3p', '6p', '9p', '12p', '3a', '6a', '9a'],
-    //       series: [
-    //           [230, 750, 450, 300, 280, 240, 200, 190]
-    //       ]
-    //   };
-
-    //  const optionsCompletedTasksChart: any = {
-    //       lineSmooth: Chartist.Interpolation.cardinal({
-    //           tension: 0
-    //       }),
-    //       low: 0,
-    //       high: 1000, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-    //       chartPadding: { top: 0, right: 0, bottom: 0, left: 0}
-    //   }
-
-    //   var completedTasksChart = new Chartist.Line('#completedTasksChart', dataCompletedTasksChart, optionsCompletedTasksChart);
-
-    //   // start animation for the Completed Tasks Chart - Line Chart
-    //   this.startAnimationForLineChart(completedTasksChart);
-
-
-
-    //   /* ----------==========     Emails Subscription Chart initialization    ==========---------- */
-
-    //   var datawebsiteViewsChart = {
-    //     labels: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
-    //     series: [
-    //       [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895]
-
-    //     ]
-    //   };
-    //   var optionswebsiteViewsChart = {
-    //       axisX: {
-    //           showGrid: false
-    //       },
-    //       low: 0,
-    //       high: 1000,
-    //       chartPadding: { top: 0, right: 5, bottom: 0, left: 0}
-    //   };
-    //   var responsiveOptions: any[] = [
-    //     ['screen and (max-width: 640px)', {
-    //       seriesBarDistance: 5,
-    //       axisX: {
-    //         labelInterpolationFnc: function (value) {
-    //           return value[0];
-    //         }
-    //       }
-    //     }]
-    //   ];
-    //   var websiteViewsChart = new Chartist.Bar('#websiteViewsChart', datawebsiteViewsChart, optionswebsiteViewsChart, responsiveOptions);
-
-    //   //start animation for the Emails Subscription Chart
-    //   this.startAnimationForBarChart(websiteViewsChart);
     this.loadSonarData();
   }
 
   loadSonarData() {
     this.sonarService.getSonarProjects().subscribe(
         (data) => {
+          this.projects = data;
           this.getByMetrics();
+          this.getBdMetrics();
+          this.getJiraData();
         },
         (error) => {
             console.log(error);
@@ -189,24 +162,127 @@ export class DashboardComponent implements OnInit {
   getByMetrics() {
     this.sonarService.getMetrics().subscribe(
         (data) => {
-          data.measures.forEach((d, index) => {
-            let obj = {
-              text: d.metric,
-              values: [d.value],
-              backgroundColor: COLORS[index]
-            };
-            this.myConfig.series.push(obj);
-          })
+          // data.measures.forEach((d, index) => {
+          //   let obj = {
+          //     text: d.metric,
+          //     values: [d.value],
+          //     backgroundColor: COLORS[index]
+          //   };
+          //   this.myConfig.series.push(obj);
+          // });
+          this.g1 = this.graph('#1EBAED', 'Participation', [5, 2]);
+          this.g2 = this.graph('#29CB6C', 'Goals met', [3, 4]);
+          this.g3 = this.graph('#E7183D', 'Blocked', [0, 7]);
+          this.g4 = this.graph('#5352ED', 'Mood', [1, 7], '7.1/10');
+          this.sonarChartConfig.graphset = [this.g1, this.g2, this.g3, this.g4];
           zingchart.render({
-            id: 'myChart',
-            data: this.myConfig,
-            height: 400,
-            width: "100%"
+            id : "sonarChart",
+            height: 400, 
+            width: '100%',
+            data : this.sonarChartConfig,
           });
         },
         (error) => {
             console.log(error);
     });
   }
+
+  getBdMetrics() {
+    this.blackDuckService.getBdMetricsByProject().subscribe(
+      (data) => {
+        this.bdMetrics = data.versions.items[0];
+        let risks = ['LOW', 'MEDIUM', 'HIGH'];
+        risks.forEach((d, index) => {
+          this.bdChartConfig.series[index].values.push(this.bdMetrics.licenseRiskProfile.counts.find(e => e.countType == d).count);
+          this.bdChartConfig.series[index].values.push(this.bdMetrics.operationalRiskProfile.counts.find(e => e.countType == d).count);
+          this.bdChartConfig.series[index].values.push(this.bdMetrics.securityRiskProfile.counts.find(e => e.countType == d).count);
+        });
+        zingchart.render({ 
+          id : 'bdMetricsChart', 
+          data : this.bdChartConfig, 
+          height: 400, 
+          width: '100%' 
+        });
+        },
+        (error) => {
+            console.log(error);
+    });
+  }
+
+  getJiraData() {
+    this.jiraService.getJiraData().subscribe(
+      (data) => {
+        this.jiraData = data;
+        zingchart.render({
+          id: 'jiraTasksChart',
+          data: this.jiraChartConfig,
+          height: 400,
+          width: "100%"
+        });
+        },
+        (error) => {
+            console.log(error);
+    });
+  }
+
+  graph(color, label, data, value?) {
+    return {
+      type : 'ring',
+      backgroundColor : '#fff',
+      plotarea : {
+        // Margin around each ring chart
+        margin : '0 50'
+      },
+      plot : {
+        slice : '80%',  // Ring width,
+        detach: false,  // Prevent ring piece from detaching on click
+        valueBox: [
+          {
+            // Percentage text
+            type: 'first',
+            text: value,
+            connected: false,
+            fontColor: color,
+            fontSize: '14px',
+            placement: 'center',
+            visible: true,
+            offsetY: '-65px',
+          },
+          {
+            // Label text
+            type: 'first',
+            text: label,
+            connected: false,
+            fontColor: '#718096',
+            fontSize: '20px',
+            placement: 'center',
+            visible: true,
+            offsetY: '-25px',
+          }
+        ],
+      },
+      scaleR : {
+        // Set to half ring
+        refAngle : 180,
+        aperture : 180
+      },
+      tooltip: {
+        // Hide tooltip
+        visible: false
+      },
+      series : [
+        {
+          // First part of the ring (colored)
+          values : [data[0]],
+          backgroundColor : color,
+        },
+        {
+          // Remainder of ring
+          values : [data[1]],
+          backgroundColor : '#EDF2F7',
+        }
+      ]
+    };
+  };
 
 }
