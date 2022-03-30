@@ -12,8 +12,8 @@ export class SonarService extends BaseWebServiceService{
     return this.doAsyncTask('GET', url);
   }
 
-  getMetrics(): Observable<any> {
-    let url = 'sqMetricsByProject?project=artaui';
+  getMetrics(key): Observable<any> {
+    let url = `sqMetricsByProject?project=${key}`;
     return this.doAsyncTask('GET', url);
   }
 }

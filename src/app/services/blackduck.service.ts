@@ -7,8 +7,8 @@ import { BaseWebServiceService } from './base-web-service.service';
 })
 export class BlackduckService extends BaseWebServiceService{
 
-  getBdMetricsByProject(): Observable<any> {
-    let url = 'bdMetricsByProject?project=xot-frontend';
+  getBdMetricsByProject(key): Observable<any> {
+    let url = `bdMetricsByProject?project=${key}`;
     return this.doAsyncTask('GET', url);
   }
 }
