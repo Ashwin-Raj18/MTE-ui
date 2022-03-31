@@ -116,6 +116,7 @@
                                       <th pSortableColumn="componentVersionName"><div><p-columnFilter type="text" field="componentVersionName" display="menu"></p-columnFilter>Version<p-sortIcon field="componentVersionName"></p-sortIcon></div></th>
                                       <th pSortableColumn="componentVersionOriginId"><div><p-columnFilter type="text" field="componentVersionOriginId" display="menu"></p-columnFilter>VersionID<p-sortIcon field="componentVersionOriginId"></p-sortIcon></div></th>
                                       <th pSortableColumn="componentVersionOriginName"><div><p-columnFilter type="text" field="componentVersionOriginName" display="menu"></p-columnFilter>VersionOriginName<p-sortIcon field="componentVersionOriginName"></p-sortIcon></div></th>
+                                      <th>Risk Status</th>
                                   </tr>
                               </ng-template>
                               <ng-template pTemplate="body" let-product>
@@ -124,6 +125,13 @@
                                       <td>{{product.componentVersionName}}</td>
                                       <td>{{product.componentVersionOriginId}}</td>
                                       <td>{{product.componentVersionOriginName}}</td>
+                
+                                      <td>
+                                        <p-button type="button" class="low" pTooltip="LOW" tooltipPosition="top" label="{{product.riskPriorityDistribution.LOW}}"  ></p-button>
+                                        <p-button type="button" class="medium" pTooltip="MEDIUM" tooltipPosition="top" label="{{product.riskPriorityDistribution.MEDIUM}}"  ></p-button>
+                                        <p-button type="button" class="high" pTooltip="HIGH" tooltipPosition="top" label="{{product.riskPriorityDistribution.HIGH}}"  ></p-button>
+                                        <p-button type="button" class="critical" pTooltip="CRITICAL" tooltipPosition="top" label="{{product.riskPriorityDistribution.CRITICAL}}"  ></p-button>
+                                      </td>
                                   </tr>
                               </ng-template>
                               <ng-template pTemplate="paginatorleft">

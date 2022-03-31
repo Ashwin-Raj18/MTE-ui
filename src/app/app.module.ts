@@ -33,6 +33,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import {InputTextModule} from 'primeng/inputtext';
 import {ChartModule} from 'primeng/chart';
 import {TabViewModule} from 'primeng/tabview';
+import {ButtonModule} from 'primeng/button';
+import {TooltipModule} from 'primeng/tooltip';
 
 @NgModule({
   imports: [
@@ -51,7 +53,9 @@ import {TabViewModule} from 'primeng/tabview';
     TableModule,
     InputTextModule,
     ChartModule,
-    TabViewModule
+    TabViewModule,
+    ButtonModule,
+    TooltipModule
   ],
   declarations: [
     AppComponent,

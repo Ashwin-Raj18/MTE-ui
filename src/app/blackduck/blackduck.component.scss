@@ -13,3 +13,20 @@
     background: #C8E6C9;
     color: #256029;
 }
+
+.low .button{
+    background: #256029 !important;
+    border: 1px solid #256029 !important;
+}
+.medium .button{
+    background: #FEEDAF;
+    border: 1px solid #FEEDAF;
+}
+.high .button{
+    background: #8a5340;
+    border: 1px solid #8a5340;
+}
+.critical .button{
+    background: #c63737;
+    border: 1px solid #c63737;
+}
