@@ -8,3 +8,15 @@
 div[id$="license-text"] {
     display: none !important;
 }
+div[id="bdMetricsChart-license-text"] {
+    display: none !important;
+}
+div[id="jiraTasksChart-license-text"] {
+    display: none !important;
+}
+div[id="jiraStatusChartConfig-license-text"] {
+    display: none !important;
+}
+div[id="sonarChart-license-text"] {
+    display: none !important;
+}

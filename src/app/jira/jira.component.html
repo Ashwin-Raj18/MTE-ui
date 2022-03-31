@@ -1,1 +1,107 @@
-<p>jira works!</p>
+<div class="dropdowns">
+    <p-dropdown [options]="sprints" [(ngModel)]="selectedSprint"></p-dropdown>
+    <p-dropdown [options]="projects" [(ngModel)]="selectedProject"></p-dropdown>
+</div>
+<div class="row" style="margin: 0;">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-tabs card-header-warning">
+                <div class="nav-tabs-navigation">
+                    <div class="nav-tabs-wrapper">
+                        <!-- <span class="nav-tabs-title">Tasks:</span> -->
+                        <ul class="nav nav-tabs" data-tabs="tabs">
+                            <li class="nav-item">
+                                <a mat-button class="nav-link active" href="#profile" data-toggle="tab">
+                                    <i class="material-icons">bug_report</i> Bugs
+                                    <div class="ripple-container"></div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a mat-button class="nav-link" href="#messages" data-toggle="tab">
+                                    <i class="material-icons">turned_in_not</i> Stories
+                                    <div class="ripple-container"></div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a mat-button class="nav-link" href="#settings" data-toggle="tab">
+                                    <i class="material-icons">task_alt</i> Tasks
+                                    <div class="ripple-container"></div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="profile">
+                        <p-table [value]="jiraData.bugs" responsiveLayout="scroll" styleClass="p-datatable-sm">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Description</th>
+                                    <th>Priority</th>
+                                    <th>Status</th>
+                                    <th>Assignee</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-product>
+                                <tr>
+                                    <td>{{product.key}}</td>
+                                    <td>{{product.fields.summary}}</td>
+                                    <td>{{product.fields.priority}}</td>
+                                    <td>{{product.fields.status}}</td>
+                                    <td>{{product.fields.Assignee.displayName}}</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                    <div class="tab-pane" id="messages">
+                        <p-table [value]="jiraData.stories" responsiveLayout="scroll" styleClass="p-datatable-sm">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Description</th>
+                                    <th>Priority</th>
+                                    <th>Status</th>
+                                    <th>Assignee</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-product>
+                                <tr>
+                                    <td>{{product.key}}</td>
+                                    <td>{{product.fields.summary}}</td>
+                                    <td>{{product.fields.priority}}</td>
+                                    <td>{{product.fields.status}}</td>
+                                    <td>{{product.fields.Assignee.displayName}}</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                    <div class="tab-pane" id="settings">
+                        <p-table [value]="jiraData.tasks" responsiveLayout="scroll" styleClass="p-datatable-sm">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Description</th>
+                                    <th>Priority</th>
+                                    <th>Status</th>
+                                    <th>Assignee</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-product>
+                                <tr>
+                                    <td>{{product.key}}</td>
+                                    <td>{{product.fields.summary}}</td>
+                                    <td>{{product.fields.priority}}</td>
+                                    <td>{{product.fields.status}}</td>
+                                    <td>{{product.fields.Assignee.displayName}}</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

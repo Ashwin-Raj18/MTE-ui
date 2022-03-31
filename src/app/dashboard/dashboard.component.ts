@@ -252,14 +252,17 @@ sonarChartConfig = {
     this.blackDuckService.getBdMetricsByProject(this.selectedProject).subscribe(
       (data) => {
         this.bdMetrics = data.versions.items[0];
+        for (let index = 0; index < 2; index++) {
+          this.bdChartConfig.series[index].values = [];          
+        }        
         let risks = ['LOW', 'MEDIUM', 'HIGH'];
         risks.forEach((d, index) => {
-          this.bdChartConfig.series[index].values = [this.bdMetrics.licenseRiskProfile.counts.find(e => e.countType == d).count];
-          this.bdChartConfig.series[index].values = [this.bdMetrics.operationalRiskProfile.counts.find(e => e.countType == d).count];
-          this.bdChartConfig.series[index].values = [this.bdMetrics.securityRiskProfile.counts.find(e => e.countType == d).count];
+          this.bdChartConfig.series[index].values.push(this.bdMetrics.licenseRiskProfile.counts.find(e => e.countType == d).count);
+          this.bdChartConfig.series[index].values.push(this.bdMetrics.operationalRiskProfile.counts.find(e => e.countType == d).count);
+          this.bdChartConfig.series[index].values.push(this.bdMetrics.securityRiskProfile.counts.find(e => e.countType == d).count);
         });
         zingchart.render({ 
-          id : 'versiondata', 
+          id : 'bdMetricsChart', 
           data : this.bdChartConfig, 
           height: 400, 
           width: '100%' 

@@ -35,6 +35,7 @@ import {ChartModule} from 'primeng/chart';
 import {TabViewModule} from 'primeng/tabview';
 import {ButtonModule} from 'primeng/button';
 import {TooltipModule} from 'primeng/tooltip';
+import {DropdownModule} from 'primeng/dropdown';
 
 @NgModule({
   imports: [
@@ -55,7 +56,8 @@ import {TooltipModule} from 'primeng/tooltip';
     ChartModule,
     TabViewModule,
     ButtonModule,
-    TooltipModule
+    TooltipModule,
+    DropdownModule
   ],
   declarations: [
     AppComponent,
