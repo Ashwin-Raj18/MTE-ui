@@ -1,0 +1,32 @@
+.product-badge.status-HIGH , .product-badge.status-CRITICAL  {
+    background: #FFCDD2;
+    color: #c63737;
+}
+
+
+.product-badge.status-LOW ,.product-badge.status-MEDIUM {
+    background: #FEEDAF;
+    color: #8a5340;
+}
+
+.product-badge.status-NONE ,.product-badge.status-OK {
+    background: #C8E6C9;
+    color: #256029;
+}
+
+.low .button{
+    background: #256029 !important;
+    border: 1px solid #256029 !important;
+}
+.medium .button{
+    background: #FEEDAF;
+    border: 1px solid #FEEDAF;
+}
+.high .button{
+    background: #8a5340;
+    border: 1px solid #8a5340;
+}
+.critical .button{
+    background: #c63737;
+    border: 1px solid #c63737;
+}

@@ -259,7 +259,7 @@ sonarChartConfig = {
           this.bdChartConfig.series[index].values = [this.bdMetrics.securityRiskProfile.counts.find(e => e.countType == d).count];
         });
         zingchart.render({ 
-          id : 'bdMetricsChart', 
+          id : 'versiondata', 
           data : this.bdChartConfig, 
           height: 400, 
           width: '100%' 

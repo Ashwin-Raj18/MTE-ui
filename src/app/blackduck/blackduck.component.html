@@ -1,1 +1,152 @@
-<p>blackduck works!</p>
+
+
+ <!--<div class="">
+    <div class="card card-chart">
+        <div class="card-header card-header-warning">
+            <div id="bdMetricsChart"></div>
+        </div>
+        <div class="card-body">
+            <h4 class="card-title">BlackDuck Metrics</h4>
+            
+                <div id="versiondata"></div> 
+  
+           
+        </div>
+        <div class="card-footer">
+            <div class="stats">
+                <i class="material-icons">access_time</i> updated 4 minutes ago
+            </div>
+        </div>
+    </div>
+</div>-->
+
+<div>
+    <div class="container-fluid">
+        <div class="row">          
+            <div class="col-md-4 ">
+                <div class="card card-chart">
+                    <div class="card-header card-header-success">
+                        Security Risk Profile
+                      </div>
+                    <p-chart type="polarArea" [data]="secuityChartData" [options]="chartOptions" [style]="{'height': '50%','width': '70%'}"></p-chart>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-chart">
+                    <div class="card-header card-header-success">
+                        Operation Risk Profile
+                      </div>
+                    <p-chart type="polarArea" [data]="operationChartData" [options]="chartOptions" [style]="{'height': '50%','width': '70%'}"></p-chart>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-chart">
+                    <div class="card-header card-header-success">
+                        License Risk Profile
+                      </div>
+                    <p-chart type="polarArea" [data]="licenseChartData" [options]="chartOptions" [style]="{'height': '50%','width': '70%'}"></p-chart>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <p-tabView style="width: 100%; ">
+                <p-tabPanel header="Component">
+                    <div class="card card-chart">
+                        <p-table #dt [value]="componentTableData" responsiveLayout="scroll" styleClass="p-datatable-sm"  [paginator]="true" [rows]="10" [showCurrentPageReport]="true" 
+                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]" [loading]="loading" sortMode="multiple" [filterDelay]="0"
+                         [globalFilterFields]="['componentName','usage','license','securityRiskProfile','licenseRiskProfile']" >
+                          <ng-template pTemplate="caption">
+                              <div class="p-d-flex">
+                                  Components
+                                  <span stlye= "float:right" class="p-input-icon-left  p-ml-auto">
+                                      <i class="pi pi-search"></i>
+                                      <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Global Search" />
+                                  </span>
+                              </div>
+                          </ng-template>
+                          <ng-template pTemplate="header">
+                              <tr>
+                                  <th pSortableColumn="componentName"><div><p-columnFilter type="text" field="componentName" display="menu"></p-columnFilter>Component Name<p-sortIcon field="componentName"></p-sortIcon></div></th>
+                                  <th pSortableColumn="usage"><div><p-columnFilter type="text" field="usage" display="menu"></p-columnFilter>Usage<p-sortIcon field="usage"></p-sortIcon></div></th>
+                                  <th pSortableColumn="license"><div><p-columnFilter type="text" field="license" display="menu"></p-columnFilter>License<p-sortIcon field="license"></p-sortIcon></div></th>
+                                  <th pSortableColumn="securityRiskProfile"><div><p-columnFilter type="text" field="securityRiskProfile" display="menu"></p-columnFilter>Security RiskProfile<p-sortIcon field="securityRiskProfile"></p-sortIcon></div></th>
+                                  <th pSortableColumn="licenseRiskProfile"><div><p-columnFilter type="text" field="licenseRiskProfile" display="menu"></p-columnFilter>License RiskProfile<p-sortIcon field="licenseRiskProfile"></p-sortIcon></div></th>
+                              </tr>
+                          </ng-template>
+                          <ng-template pTemplate="body" let-product>
+                              <tr>
+                                  <td>{{product.componentName}}</td>
+                                  <td>{{product.usage}}</td>
+                                  <td>{{product.license}}</td>
+                                  <td>
+                                    <span [class]="'product-badge status-' + product.securityRiskProfile">{{product.securityRiskProfile}}</span>
+                                  </td>
+                                  <td>
+                                      <span [class]="'product-badge status-' + product.licenseRiskProfile">{{product.licenseRiskProfile}}</span>
+                                  </td>
+                              </tr>
+                          </ng-template>
+                          <ng-template pTemplate="paginatorleft">
+                              <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+                          </ng-template>
+                          <ng-template pTemplate="paginatorright">
+                              <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+                          </ng-template>
+                      </p-table>
+                    </div>
+                </p-tabPanel>
+
+                <p-tabPanel header="Security">
+                        <div class="card card-chart">
+                            <p-table #dt2 [value]="securityTableData" responsiveLayout="scroll" styleClass="p-datatable-sm"  [paginator]="true" [rows]="10" [showCurrentPageReport]="true" 
+                            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]" [loading]="loadingSecurity" sortMode="multiple" [filterDelay]="0"
+                             [globalFilterFields]="['componentName','componentVersionName','componentVersionOriginId','componentVersionOriginName']" >
+                              <ng-template pTemplate="caption">
+                                  <div class="p-d-flex">
+                                      Vulnerability
+                                      <span stlye= "float:right" class="p-input-icon-left  p-ml-auto">
+                                          <i class="pi pi-search"></i>
+                                          <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Global Search" />
+                                      </span>
+                                  </div>
+                              </ng-template>
+                              <ng-template pTemplate="header">
+                                  <tr>
+                                      <th pSortableColumn="componentName"><div><p-columnFilter type="text" field="componentName" display="menu"></p-columnFilter>Component Name<p-sortIcon field="componentName"></p-sortIcon></div></th>
+                                      <th pSortableColumn="componentVersionName"><div><p-columnFilter type="text" field="componentVersionName" display="menu"></p-columnFilter>Version<p-sortIcon field="componentVersionName"></p-sortIcon></div></th>
+                                      <th pSortableColumn="componentVersionOriginId"><div><p-columnFilter type="text" field="componentVersionOriginId" display="menu"></p-columnFilter>VersionID<p-sortIcon field="componentVersionOriginId"></p-sortIcon></div></th>
+                                      <th pSortableColumn="componentVersionOriginName"><div><p-columnFilter type="text" field="componentVersionOriginName" display="menu"></p-columnFilter>VersionOriginName<p-sortIcon field="componentVersionOriginName"></p-sortIcon></div></th>
+                                      <th>Risk Status</th>
+                                  </tr>
+                              </ng-template>
+                              <ng-template pTemplate="body" let-product>
+                                  <tr>
+                                      <td>{{product.componentName}}</td>
+                                      <td>{{product.componentVersionName}}</td>
+                                      <td>{{product.componentVersionOriginId}}</td>
+                                      <td>{{product.componentVersionOriginName}}</td>
+                
+                                      <td>
+                                        <p-button type="button" class="low" pTooltip="LOW" tooltipPosition="top" label="{{product.riskPriorityDistribution.LOW}}"  ></p-button>
+                                        <p-button type="button" class="medium" pTooltip="MEDIUM" tooltipPosition="top" label="{{product.riskPriorityDistribution.MEDIUM}}"  ></p-button>
+                                        <p-button type="button" class="high" pTooltip="HIGH" tooltipPosition="top" label="{{product.riskPriorityDistribution.HIGH}}"  ></p-button>
+                                        <p-button type="button" class="critical" pTooltip="CRITICAL" tooltipPosition="top" label="{{product.riskPriorityDistribution.CRITICAL}}"  ></p-button>
+                                      </td>
+                                  </tr>
+                              </ng-template>
+                              <ng-template pTemplate="paginatorleft">
+                                  <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+                              </ng-template>
+                              <ng-template pTemplate="paginatorright">
+                                  <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+                              </ng-template>
+                          </p-table>
+                        </div>
+                </p-tabPanel>
+            </p-tabView>
+
+        </div>
+    </div>
+</div>
+
+

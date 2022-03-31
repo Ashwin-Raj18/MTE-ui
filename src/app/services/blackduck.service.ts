@@ -11,4 +11,21 @@ export class BlackduckService extends BaseWebServiceService{
     let url = `bdMetricsByProject?project=${key}`;
     return this.doAsyncTask('GET', url);
   }
+
+  bdComponentByProject(key): Observable<any> {
+    let url = `bdComponentByProject?project=${key}`;
+    return this.doAsyncTask('GET', url);
+  }
+
+  bdSecurityByProject(key): Observable<any> {
+    let url = `bdVulsByProject?project=${key}`;
+    return this.doAsyncTask('GET', url);
+  }
+
+  getBDProjects(): Observable<any> {
+    let url = 'bdProjects';
+    return this.doAsyncTask('GET', url);
+  }
+
+
 }
