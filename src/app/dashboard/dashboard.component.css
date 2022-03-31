@@ -5,3 +5,6 @@
 .option {
     padding: 5px 12px;
 }
+div[id$="license-text"] {
+    display: none !important;
+}

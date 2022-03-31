@@ -69,15 +69,15 @@
               </div>
           </div>
       </div> -->
-      <div class="row" style="justify-content: space-end;">
-        <div id="navigation">
-            <select class="form-select" aria-label="Default select example">
-                <option class="option" *ngFor="let project of projects">{{project}}</option>
+      <div class="row" style="justify-content: flex-end;">
+        <div id="navigation" class="col-3"style="display:flex;justify-content: flex-end;">
+            <select class="form-select" aria-label="Default select example" (change)="getByProject($event.target.value)">
+                <option class="option" *ngFor="let project of projects" [value]="project">{{project}}</option>
               </select>
         </div>
       </div>
       <div class="row">          
-          <div class="col-md-8">
+          <div class="col-md-6">
               <div class="card card-chart">
                   <div class="card-header card-header-warning">
                       <div id="bdMetricsChart"></div>
@@ -93,10 +93,11 @@
                   </div>
               </div>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-6">
               <div class="card card-chart">
-                  <div class="card-header card-header-danger">
-                      <div id="jiraTasksChart"></div>
+                  <div class="card-header card-header-danger row">
+                      <div class="col-6" id="jiraTasksChart" style="padding: 0;"></div>
+                      <div class="col-6" id="jiraStatusChartConfig"></div>
                   </div>
                   <div class="card-body">
                       <h4 class="card-title">JIRA Metrics</h4>

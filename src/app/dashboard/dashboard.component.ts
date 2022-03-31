@@ -16,6 +16,7 @@ import { JiraService } from 'app/services/jira.service';
 })
 export class DashboardComponent implements OnInit {
 
+  selectedProject = 'arta-ui';
   myConfig = {
     "type": "ring",
     "plot": {
@@ -36,6 +37,11 @@ export class DashboardComponent implements OnInit {
     "type": "bar",
     "plotarea": {
         "margin": "dynamic"
+    },
+    globals: {
+      fontFamily: 'CorpoS',
+      fontSize: 14,
+      fontWeight: 'normal',
     },
     "plot": {   
         "bars-space-left":0.15,
@@ -72,7 +78,7 @@ export class DashboardComponent implements OnInit {
         "line-width":"100%",
         "alpha":0.18,
         "plot-label":{
-          "header-text":"%kv Sales"
+          "header-text":"%kv"
         }
     },
     "series": [
@@ -105,17 +111,78 @@ export class DashboardComponent implements OnInit {
 
 jiraChartConfig = {
   "type": "nestedpie",
+  title: {
+    text: "Issue Type",
+    'font-size': 14
+  },
+  globals: {
+    fontFamily: 'CorpoS',
+    fontSize: 14,
+    fontWeight: 'normal',
+  },
   "plot": {
-    "slice-start": "35%"
+    "slice-start": "50%",
+    "tooltip": { //Standard Tooltips
+      "text": "%v %t",
+      "padding": "10%",
+      "border-radius": "5px"
+    }
   },
   "series": [{
-      "values": [59, 55, 30]
+      "values": [],
+      "text": "Bug",
+      "background-color": "red",
     },
     {
-      "values": [60, 50, 35]
+      "values": [],
+      "text": "Story",
+      "background-color": "teal",
     },
     {
-      "values": [50, 40, 30]
+      "values": [],
+      "text": "Task",
+      "background-color": "blue",
+    }
+  ]
+};
+jiraStatusChartConfig = {
+  "type": "nestedpie",
+  title: {
+    text: "Status",
+    'font-size': 14
+  },
+  globals: {
+    fontFamily: 'CorpoS',
+    fontSize: 14,
+    fontWeight: 'normal',
+  },
+  "plot": {
+    "slice-start": "50%",
+    "tooltip": { //Standard Tooltips
+      "text": "%v %t",
+      "padding": "10%",
+      "border-radius": "5px"
+    }
+  },
+  "series": [{
+      "values": [],
+      "text": "To Do",
+      "background-color": "purple",
+    },
+    {
+      "values": [],
+      "text": "In Progress",
+      "background-color": "orange",
+    },
+    {
+      "values": [],
+      "text": "Testing",
+      "background-color": "blue",
+    },
+    {
+      "values": [],
+      "text": "Done",
+      "background-color": "green",
     }
   ]
 };
@@ -149,10 +216,8 @@ sonarChartConfig = {
   loadSonarData() {
     this.sonarService.getSonarProjects().subscribe(
         (data) => {
-          this.projects = data;
-          this.getByMetrics();
-          this.getBdMetrics();
-          this.getJiraData();
+          this.projects = data;  
+          this.getByProject(this.selectedProject);        
         },
         (error) => {
             console.log(error);
@@ -160,24 +225,20 @@ sonarChartConfig = {
   }
 
   getByMetrics() {
-    this.sonarService.getMetrics().subscribe(
+    this.sonarService.getMetrics(this.selectedProject).subscribe(
         (data) => {
-          // data.measures.forEach((d, index) => {
-          //   let obj = {
-          //     text: d.metric,
-          //     values: [d.value],
-          //     backgroundColor: COLORS[index]
-          //   };
-          //   this.myConfig.series.push(obj);
-          // });
-          this.g1 = this.graph('#1EBAED', 'Participation', [5, 2]);
-          this.g2 = this.graph('#29CB6C', 'Goals met', [3, 4]);
-          this.g3 = this.graph('#E7183D', 'Blocked', [0, 7]);
-          this.g4 = this.graph('#5352ED', 'Mood', [1, 7], '7.1/10');
+          let bugs = parseInt(data.measures.find(e => e.metric == 'bugs').value);
+          let code_smells = parseInt(data.measures.find(e => e.metric == 'code smells').value);
+          let hotspots = parseInt(data.measures.find(e => e.metric == 'security hotspots').value);
+          let vulnerabilities = parseInt(data.measures.find(e => e.metric == 'vulnerabilities').value);
+          this.g1 = this.graph('#F03A13', 'Bugs', [bugs, Math.floor(Math.random() * (bugs - 1) + 1)], bugs);
+          this.g2 = this.graph('#E6B323', 'Code Smells', [code_smells,Math.floor(Math.random() * (code_smells - 1) + 1)], code_smells);
+          this.g3 = this.graph('#8614DA', 'Vulnerabilities', [hotspots, Math.floor(Math.random() * (hotspots - 1) + 1)], hotspots);
+          this.g4 = this.graph('#9D5597', 'Security Hotspots', [vulnerabilities, Math.floor(Math.random() * (vulnerabilities - 1) + 1)], vulnerabilities);
           this.sonarChartConfig.graphset = [this.g1, this.g2, this.g3, this.g4];
           zingchart.render({
             id : "sonarChart",
-            height: 400, 
+            height: 200, 
             width: '100%',
             data : this.sonarChartConfig,
           });
@@ -188,7 +249,7 @@ sonarChartConfig = {
   }
 
   getBdMetrics() {
-    this.blackDuckService.getBdMetricsByProject().subscribe(
+    this.blackDuckService.getBdMetricsByProject(this.selectedProject).subscribe(
       (data) => {
         this.bdMetrics = data.versions.items[0];
         let risks = ['LOW', 'MEDIUM', 'HIGH'];
@@ -210,12 +271,26 @@ sonarChartConfig = {
   }
 
   getJiraData() {
-    this.jiraService.getJiraData().subscribe(
+    this.jiraService.getJiraData(this.selectedProject).subscribe(
       (data) => {
         this.jiraData = data;
+        this.jiraChartConfig.series[0].values = [this.jiraData.issueType.Bug];
+        this.jiraChartConfig.series[1].values = [this.jiraData.issueType.Story];
+        this.jiraChartConfig.series[2].values = [this.jiraData.issueType.Task];
+        this.jiraStatusChartConfig.series[0].values = [this.jiraData.status['To Do']];
+        this.jiraStatusChartConfig.series[1].values = [this.jiraData.status['In Progress']];
+        this.jiraStatusChartConfig.series[2].values = [this.jiraData.status['Testing']];
+        this.jiraStatusChartConfig.series[3].values = [this.jiraData.status['Done']];
+        console.log(this.jiraStatusChartConfig);
         zingchart.render({
           id: 'jiraTasksChart',
           data: this.jiraChartConfig,
+          height: 400,
+          width: "100%"
+        });
+        zingchart.render({
+          id: 'jiraStatusChartConfig',
+          data: this.jiraStatusChartConfig,
           height: 400,
           width: "100%"
         });
@@ -233,6 +308,11 @@ sonarChartConfig = {
         // Margin around each ring chart
         margin : '0 50'
       },
+      globals: {
+        fontFamily: 'CorpoS',
+        fontSize: 14,
+        fontWeight: 'normal',
+      },
       plot : {
         slice : '80%',  // Ring width,
         detach: false,  // Prevent ring piece from detaching on click
@@ -246,7 +326,7 @@ sonarChartConfig = {
             fontSize: '14px',
             placement: 'center',
             visible: true,
-            offsetY: '-65px',
+            offsetY: '-45px',
           },
           {
             // Label text
@@ -254,7 +334,7 @@ sonarChartConfig = {
             text: label,
             connected: false,
             fontColor: '#718096',
-            fontSize: '20px',
+            fontSize: '14px',
             placement: 'center',
             visible: true,
             offsetY: '-25px',
@@ -283,6 +363,13 @@ sonarChartConfig = {
         }
       ]
     };
-  };
+  }
+
+  getByProject(project) {
+    this.selectedProject = project;
+    this.getByMetrics();
+    this.getBdMetrics();
+    this.getJiraData();
+  }
 
 }

@@ -7,18 +7,18 @@ import { BaseWebServiceService } from './base-web-service.service';
 })
 export class BlackduckService extends BaseWebServiceService{
 
-  getBdMetricsByProject(): Observable<any> {
-    let url = 'bdMetricsByProject?project=arta-api';
+  getBdMetricsByProject(key): Observable<any> {
+    let url = `bdMetricsByProject?project=${key}`;
     return this.doAsyncTask('GET', url);
   }
 
-  bdComponentByProject(): Observable<any> {
-    let url = 'bdComponentByProject?project=arta-api';
+  bdComponentByProject(key): Observable<any> {
+    let url = `bdComponentByProject?project=${key}`;
     return this.doAsyncTask('GET', url);
   }
 
-  bdSecurityByProject(): Observable<any> {
-    let url = 'bdVulsByProject?project=arta-api';
+  bdSecurityByProject(key): Observable<any> {
+    let url = `bdVulsByProject?project=${key}`;
     return this.doAsyncTask('GET', url);
   }
 

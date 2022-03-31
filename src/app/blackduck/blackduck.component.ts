@@ -267,7 +267,7 @@ export class BlackduckComponent implements OnInit {
       
     }
     getbdSecurityByProject() {
-        this.bdService.bdSecurityByProject().subscribe(
+        this.bdService.bdSecurityByProject('arta-api').subscribe(
             (componentData) => {
                 this.mapEachSecurityToTableData(componentData)
                 console.log(this.securityTableData)
@@ -279,7 +279,7 @@ export class BlackduckComponent implements OnInit {
 
 
     getbdComponentByProject() {
-        this.bdService.bdComponentByProject().subscribe(
+        this.bdService.bdComponentByProject('arta-api').subscribe(
             (componentData) => {
                 this.mapEachcomponentToTableData(componentData)
                 console.log(this.componentTableData)
@@ -338,7 +338,7 @@ export class BlackduckComponent implements OnInit {
 
     getVersionDetails() {
        
-            this.bdService.getBdMetricsByProject().subscribe(
+            this.bdService.getBdMetricsByProject('arta-api').subscribe(
                 (data) => {
                     console.log(data)
                     this.mapEachVersionToChartData(data)

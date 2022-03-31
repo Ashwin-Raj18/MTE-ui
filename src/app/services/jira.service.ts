@@ -7,8 +7,8 @@ import { BaseWebServiceService } from './base-web-service.service';
 })
 export class JiraService extends BaseWebServiceService{
 
-  getJiraData(): Observable<any> {
-    let url = 'bdMetricsByProject?project=xot-frontend';
+  getJiraData(key): Observable<any> {
+    let url = `project/metrics?project=${key}`
     return this.doAsyncTask('GET', url);
   }
 }
