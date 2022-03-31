@@ -28,10 +28,16 @@ import { SonarqubeComponent } from './sonarqube/sonarqube.component';
 import { JiraComponent } from './jira/jira.component';
 import { BlackduckComponent } from './blackduck/blackduck.component';
 import { ZingchartAngularModule } from 'zingchart-angular';
+import {TableModule} from 'primeng/table';
+import { BrowserModule } from '@angular/platform-browser';
+import {InputTextModule} from 'primeng/inputtext';
+import {ChartModule} from 'primeng/chart';
+import {TabViewModule} from 'primeng/tabview';
 
 @NgModule({
   imports: [
     BrowserAnimationsModule,
+    BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
@@ -41,14 +47,19 @@ import { ZingchartAngularModule } from 'zingchart-angular';
     AgmCoreModule.forRoot({
       apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
     }),
-    ZingchartAngularModule
+    ZingchartAngularModule,
+    TableModule,
+    InputTextModule,
+    ChartModule,
+    TabViewModule
   ],
   declarations: [
     AppComponent,
     AdminLayoutComponent,
     SonarqubeComponent,
     JiraComponent,
-    BlackduckComponent,
+    BlackduckComponent
+    
 
   ],
   providers: [ BaseWebServiceService, SonarService ],
