@@ -20,3 +20,6 @@ div[id="jiraStatusChartConfig-license-text"] {
 div[id="sonarChart-license-text"] {
     display: none !important;
 }
+.blue-bg {
+    background: #00688f !important;
+}
