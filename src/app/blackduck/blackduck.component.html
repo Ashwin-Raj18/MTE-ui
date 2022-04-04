@@ -20,6 +20,10 @@
     </div>
 </div>-->
 
+<div class="dropdowns">
+    <p-dropdown [options]="projects" [(ngModel)]="selectedProject" (onChange)="getByProject()" ></p-dropdown>
+</div>
+
 <div>
     <div class="container-fluid">
         <div class="row">          
