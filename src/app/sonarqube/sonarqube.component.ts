@@ -39,6 +39,7 @@ export class SonarqubeComponent implements OnInit {
 
   getIssuesByProject() {
     this.loadingIssues = true;
+    this.issues = []
     this.sonarService.getIssues(this.selectedProject).subscribe(
       (response) => {
         this.issues = response.issues;
