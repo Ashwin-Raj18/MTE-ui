@@ -1,6 +1,6 @@
 <div class="dropdowns">
-    <p-dropdown [options]="sprints" [(ngModel)]="selectedSprint"></p-dropdown>
-    <p-dropdown [options]="projects" [(ngModel)]="selectedProject"></p-dropdown>
+    <p-dropdown [options]="sprints" [(ngModel)]="selectedSprint" (onChange)="getProjectData()"></p-dropdown>
+    <p-dropdown [options]="projects" [(ngModel)]="selectedProject" (onChange)="getProjectData()"></p-dropdown>
 </div>
 <div class="row" style="margin: 0;">
     <div class="col-md-12">

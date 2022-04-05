@@ -36,6 +36,7 @@ import {TabViewModule} from 'primeng/tabview';
 import {ButtonModule} from 'primeng/button';
 import {TooltipModule} from 'primeng/tooltip';
 import {DropdownModule} from 'primeng/dropdown';
+import {FieldsetModule} from 'primeng/fieldset';
 
 @NgModule({
   imports: [
@@ -57,7 +58,8 @@ import {DropdownModule} from 'primeng/dropdown';
     TabViewModule,
     ButtonModule,
     TooltipModule,
-    DropdownModule
+    DropdownModule,
+    FieldsetModule
   ],
   declarations: [
     AppComponent,

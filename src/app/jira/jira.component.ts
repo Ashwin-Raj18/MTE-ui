@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { JiraService } from 'app/services/jira.service';
+import { PrimeNGConfig } from 'primeng/api';
 
 @Component({
   selector: 'app-jira',
@@ -10,8 +11,8 @@ export class JiraComponent implements OnInit {
 
   sprints = [];
   projects = [];
-  selectedProject = '';
-  selectedSprint = '';
+  selectedProject = 'arta-api';
+  selectedSprint = 'MTE-Sprint-2';
   jiraData = {
     bugs: [],
     stories: [],
@@ -19,10 +20,12 @@ export class JiraComponent implements OnInit {
   };
 
   constructor(
-    private jiraService: JiraService
+    private jiraService: JiraService,
+    private primengConfig: PrimeNGConfig
   ) { }
 
   ngOnInit(): void {
+    this.primengConfig.ripple = true;
     this.getSprints();
     this.getProjects();
     this.getProjectData();
@@ -31,7 +34,7 @@ export class JiraComponent implements OnInit {
   getSprints() {
     this.jiraService.getSprints('arta-api').subscribe(
       (data) => {
-        this.sprints = data;         
+        this.sprints = data;        
       },
       (error) => {
           console.log(error);
@@ -49,7 +52,7 @@ export class JiraComponent implements OnInit {
   }
 
   getProjectData() {
-    this.jiraService.getMetricsBySprint('arta-api', 'MTE Sprint 3').subscribe(
+    this.jiraService.getMetricsBySprint(this.selectedProject, this.selectedSprint).subscribe(
       (data) => {
         this.jiraData.bugs = data.filter(d => {if (d.fields.issuetype.name == 'Bug') return d});   
         this.jiraData.stories = data.filter(d => {if (d.fields.issuetype.name == 'Story')return d});  
