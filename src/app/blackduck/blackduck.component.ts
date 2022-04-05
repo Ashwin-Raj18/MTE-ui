@@ -208,26 +208,41 @@ export class BlackduckComponent implements OnInit {
 
     //generate for security risk profile chart
     let countData = [];
+    let lableData = [];
     versionData.securityRiskProfile.counts.forEach((i) => {
-      countData.push(i.count);
+      if(!(i.countType == 'OK' || i.countType == 'UNKNOWN' )){
+        countData.push(i.count);
+        lableData.push(i.countType + " : " +i.count )
+      }
     });
     this.secuityChartData.datasets[0].data = countData;
+    this.secuityChartData.labels = lableData;
     this.secuityChartData =  {...this.secuityChartData }
 
     //generate for operation risk profile chart
     countData = [];
+    lableData = [];
     versionData.operationalRiskProfile.counts.forEach((i) => {
-      countData.push(i.count);
+      if(!(i.countType == 'OK' || i.countType == 'UNKNOWN' )){
+        countData.push(i.count);
+        lableData.push(i.countType + " : " +i.count )
+      }
     });
     this.operationChartData.datasets[0].data = countData;
+    this.operationChartData.labels = lableData;
     this.operationChartData =  {...this.operationChartData }
 
     //generate for license risk profile chart
     countData = [];
+    lableData = [];
     versionData.licenseRiskProfile.counts.forEach((i) => {
-      countData.push(i.count);
+      if(!(i.countType == 'OK' || i.countType == 'UNKNOWN' )){
+        countData.push(i.count);
+        lableData.push(i.countType + " : " +i.count )
+      }
     });
     this.licenseChartData.datasets[0].data = countData;
+    this.licenseChartData.labels = lableData;
     this.licenseChartData =  {...this.licenseChartData }
   }
 }
