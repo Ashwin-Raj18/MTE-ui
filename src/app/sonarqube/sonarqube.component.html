@@ -1,1 +1,49 @@
-<p>sonarqube works!</p>
+<div class="dropdowns">
+    <p-dropdown [options]="projects" [(ngModel)]="selectedProject" (onChange)="getByProject()" ></p-dropdown>
+</div>
+
+<div>
+    <div class="container-fluid">
+        <div class="row"> 
+            <div class="card card-chart">
+                <p-table #dt2 [value]="issues" responsiveLayout="scroll" styleClass="p-datatable-sm"  [paginator]="true" [rows]="10" [showCurrentPageReport]="true" 
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]" [loading]="loadingIssues" sortMode="multiple" [filterDelay]="0"
+                 [globalFilterFields]="['severity','component','line','message','type']" >
+                  <ng-template pTemplate="caption">
+                      <div class="p-d-flex">
+                          Issues
+                          <span stlye= "float:right" class="p-input-icon-left  p-ml-auto">
+                              <i class="pi pi-search"></i>
+                              <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Global Search" />
+                          </span>
+                      </div>
+                  </ng-template>
+                  <ng-template pTemplate="header">
+                      <tr>
+                          <th pSortableColumn="severity"><div><p-columnFilter type="text" field="severity" display="menu"></p-columnFilter>Severity<p-sortIcon field="severity"></p-sortIcon></div></th>
+                          <th pSortableColumn="component"><div><p-columnFilter type="text" field="component" display="menu"></p-columnFilter>Component<p-sortIcon field="component"></p-sortIcon></div></th>
+                          <th pSortableColumn="line"><div><p-columnFilter type="text" field="line" display="menu"></p-columnFilter>Line<p-sortIcon field="line"></p-sortIcon></div></th>
+                          <th pSortableColumn="message"><div><p-columnFilter type="text" field="message" display="menu"></p-columnFilter>Message<p-sortIcon field="message"></p-sortIcon></div></th>
+                          <th pSortableColumn="type"><div><p-columnFilter type="text" field="type" display="menu"></p-columnFilter>Type<p-sortIcon field="type"></p-sortIcon></div></th>
+                      </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-product>
+                      <tr>
+                          <td>{{product.severity}}</td>
+                          <td>{{product.component}}</td>
+                          <td>{{product.line}}</td>
+                          <td>{{product.message}}</td>
+                          <td>{{product.type}}</td>
+                      </tr>
+                  </ng-template>
+                  <ng-template pTemplate="paginatorleft">
+                      <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+                  </ng-template>
+                  <ng-template pTemplate="paginatorright">
+                      <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+                  </ng-template>
+              </p-table>
+            </div>
+        </div>
+    </div>
+</div>

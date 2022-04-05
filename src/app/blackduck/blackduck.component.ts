@@ -30,50 +30,47 @@ export class BlackduckComponent implements OnInit {
   secuityChartData = {
     datasets: [
       {
-        data: [0, 0, 0, 0, 0],
+        data: [0, 0, 0, 0],
         backgroundColor: [
           "#42A5F5",
           "#66BB6A",
           "#FFA726",
           "#26C6DA",
-          "#7E57C2",
         ],
         label: "My dataset",
       },
     ],
-    labels: ["CRITICAL", "HIGH", "MEDIUM", "LOW", "OK"],
+    labels: ["CRITICAL", "HIGH", "MEDIUM", "LOW"],
   };
   licenseChartData = {
     datasets: [
       {
-        data: [0, 0, 0, 0, 0],
+        data: [0, 0, 0, 0],
         backgroundColor: [
           "#42A5F5",
           "#66BB6A",
           "#FFA726",
           "#26C6DA",
-          "#7E57C2",
         ],
         label: "My dataset",
       },
     ],
-    labels: ["CRITICAL", "HIGH", "MEDIUM", "LOW", "OK"],
+    labels: ["CRITICAL", "HIGH", "MEDIUM", "LOW"],
   };
   operationChartData = {
     datasets: [
       {
-        data: [0, 0, 0, 0, 0],
+        data: [0, 0, 0, 0],
         backgroundColor: [
           "#42A5F5",
           "#66BB6A",
           "#FFA726",
           "#26C6DA",
-          "#7E57C2",
         ],
         label: "My dataset",
       },
     ],
-    labels: ["CRITICAL", "HIGH", "MEDIUM", "LOW", "OK"],
+    labels: ["CRITICAL", "HIGH", "MEDIUM", "LOW"],
   };
  
   constructor(private bdService: BlackduckService) {}
@@ -94,9 +91,9 @@ export class BlackduckComponent implements OnInit {
   }
 
   getByProject() {
-    this.secuityChartData.datasets[0].data = [0, 0, 0, 0, 0] ;
-    this.operationChartData.datasets[0].data = [0, 0, 0, 0, 0] ;
-    this.licenseChartData.datasets[0].data = [0, 0, 0, 0, 0] ;
+    this.secuityChartData.datasets[0].data = [0, 0, 0, 0] ;
+    this.operationChartData.datasets[0].data = [0, 0, 0, 0] ;
+    this.licenseChartData.datasets[0].data = [0, 0, 0, 0] ;
 
     this.getVersionDetails();
     this.getbdComponentByProject();

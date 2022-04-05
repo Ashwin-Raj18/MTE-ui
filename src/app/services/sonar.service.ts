@@ -18,7 +18,7 @@ export class SonarService extends BaseWebServiceService{
   }
 
   getIssues(key): Observable<any> {
-    let url = `sqMetricsByProject?project=${key}`;
+    let url = `sqIssuesByProject?project=${key}`;
     return this.doAsyncTask('GET', url);
   }
   getHotSpots(key): Observable<any> {
