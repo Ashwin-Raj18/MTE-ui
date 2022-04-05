@@ -3,6 +3,28 @@
     <p-dropdown [options]="projects" [(ngModel)]="selectedProject" (onChange)="getProjectData()"></p-dropdown>
 </div>
 <div class="row" style="margin: 0;">
+    <p-panel class="col-sm-12" [header]="selectedSprint">
+        <h5>Overall Sprint Progress (Story Points)</h5> 
+        <div class="row progress" style="margin: 0;">
+            <div class="col-md-6">29</div>
+            <div class="col-md-4">27</div>
+            <div class="col-md-2">5</div>
+        </div>
+        <div class="row status" style="margin: 0;">
+            <div class="col-md-4"><h2>34%</h2><span>Time elapsed</span></div>
+            <div class="col-md-4"><h2>8%</h2><span>Work complete</span></div>
+            <div class="col-md-4"><h2>65%</h2><span>Scope change</span></div>
+        </div>
+        <h5 style="font-weight: bold;">Assignees in Sprint</h5>
+        <div class="row circles" style="margin: 0;">
+            <div>AR</div>
+            <div>AH</div>
+            <div>AB</div>
+            <div>DM</div>
+        </div>
+    </p-panel>
+</div>
+<div class="row" style="margin: 0;">
     <div class="col-md-12">
         <div class="card">
             <div class="card-header card-header-tabs card-header-warning blue-bg">

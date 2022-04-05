@@ -37,7 +37,7 @@ import {ButtonModule} from 'primeng/button';
 import {TooltipModule} from 'primeng/tooltip';
 import {DropdownModule} from 'primeng/dropdown';
 import {FieldsetModule} from 'primeng/fieldset';
-
+import {PanelModule} from 'primeng/panel';
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -59,7 +59,8 @@ import {FieldsetModule} from 'primeng/fieldset';
     ButtonModule,
     TooltipModule,
     DropdownModule,
-    FieldsetModule
+    FieldsetModule,
+    PanelModule
   ],
   declarations: [
     AppComponent,

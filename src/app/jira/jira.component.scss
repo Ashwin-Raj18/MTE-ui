@@ -11,3 +11,36 @@
     display: flex;
     align-items: center;
 }
+.progress {
+    height: 40px;
+    div {
+        height: 40px;
+        background: grey;
+        color: #fff;
+        display: flex;
+        align-items: center;
+    }
+    div:nth-child(2) {
+        background: orange;
+    }
+    div:last-child {
+        background: green;
+    }
+}
+.status {
+    padding-bottom: 15px;
+    div:last-child {
+        color: red;
+    }
+}
+.circles {
+    div {
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        background: #ceeffa;
+        margin: 5px;
+        text-align: center;
+        line-height: 37px;
+    }
+}
