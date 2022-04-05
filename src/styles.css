@@ -16,7 +16,3 @@ src: url("/assets/fonts/CorpoA/CorpoA.ttf") format("truetype"),
 body {
     font-family: "CorpoS";
 }
-
-div#bdMetricsChart-license-text{
-    display: none !important;
-}
