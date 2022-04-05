@@ -30,50 +30,47 @@ export class BlackduckComponent implements OnInit {
   secuityChartData = {
     datasets: [
       {
-        data: [0, 0, 0, 0, 0],
+        data: [0, 0, 0, 0],
         backgroundColor: [
           "#42A5F5",
           "#66BB6A",
           "#FFA726",
           "#26C6DA",
-          "#7E57C2",
         ],
         label: "My dataset",
       },
     ],
-    labels: ["CRITICAL", "HIGH", "MEDIUM", "LOW", "OK"],
+    labels: ["CRITICAL", "HIGH", "MEDIUM", "LOW"],
   };
   licenseChartData = {
     datasets: [
       {
-        data: [0, 0, 0, 0, 0],
+        data: [0, 0, 0, 0],
         backgroundColor: [
           "#42A5F5",
           "#66BB6A",
           "#FFA726",
           "#26C6DA",
-          "#7E57C2",
         ],
         label: "My dataset",
       },
     ],
-    labels: ["CRITICAL", "HIGH", "MEDIUM", "LOW", "OK"],
+    labels: ["CRITICAL", "HIGH", "MEDIUM", "LOW"],
   };
   operationChartData = {
     datasets: [
       {
-        data: [0, 0, 0, 0, 0],
+        data: [0, 0, 0, 0],
         backgroundColor: [
           "#42A5F5",
           "#66BB6A",
           "#FFA726",
           "#26C6DA",
-          "#7E57C2",
         ],
         label: "My dataset",
       },
     ],
-    labels: ["CRITICAL", "HIGH", "MEDIUM", "LOW", "OK"],
+    labels: ["CRITICAL", "HIGH", "MEDIUM", "LOW"],
   };
  
   constructor(private bdService: BlackduckService) {}
@@ -94,9 +91,9 @@ export class BlackduckComponent implements OnInit {
   }
 
   getByProject() {
-    this.secuityChartData.datasets[0].data = [0, 0, 0, 0, 0] ;
-    this.operationChartData.datasets[0].data = [0, 0, 0, 0, 0] ;
-    this.licenseChartData.datasets[0].data = [0, 0, 0, 0, 0] ;
+    this.secuityChartData.datasets[0].data = [0, 0, 0, 0] ;
+    this.operationChartData.datasets[0].data = [0, 0, 0, 0] ;
+    this.licenseChartData.datasets[0].data = [0, 0, 0, 0] ;
 
     this.getVersionDetails();
     this.getbdComponentByProject();
@@ -211,26 +208,41 @@ export class BlackduckComponent implements OnInit {
 
     //generate for security risk profile chart
     let countData = [];
+    let lableData = [];
     versionData.securityRiskProfile.counts.forEach((i) => {
-      countData.push(i.count);
+      if(!(i.countType == 'OK' || i.countType == 'UNKNOWN' )){
+        countData.push(i.count);
+        lableData.push(i.countType + " : " +i.count )
+      }
     });
     this.secuityChartData.datasets[0].data = countData;
+    this.secuityChartData.labels = lableData;
     this.secuityChartData =  {...this.secuityChartData }
 
     //generate for operation risk profile chart
     countData = [];
+    lableData = [];
     versionData.operationalRiskProfile.counts.forEach((i) => {
-      countData.push(i.count);
+      if(!(i.countType == 'OK' || i.countType == 'UNKNOWN' )){
+        countData.push(i.count);
+        lableData.push(i.countType + " : " +i.count )
+      }
     });
     this.operationChartData.datasets[0].data = countData;
+    this.operationChartData.labels = lableData;
     this.operationChartData =  {...this.operationChartData }
 
     //generate for license risk profile chart
     countData = [];
+    lableData = [];
     versionData.licenseRiskProfile.counts.forEach((i) => {
-      countData.push(i.count);
+      if(!(i.countType == 'OK' || i.countType == 'UNKNOWN' )){
+        countData.push(i.count);
+        lableData.push(i.countType + " : " +i.count )
+      }
     });
     this.licenseChartData.datasets[0].data = countData;
+    this.licenseChartData.labels = lableData;
     this.licenseChartData =  {...this.licenseChartData }
   }
 }
