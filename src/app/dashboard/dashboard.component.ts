@@ -211,12 +211,15 @@ sonarChartConfig = {
   
   ngOnInit() {
     this.loadSonarData();
+  }
+
+  ngAfterViewInit() {
     setTimeout(() => {
       document.getElementById('bdMetricsChart-license-text').style.display = 'none';
       document.getElementById('jiraTasksChart-license-text').style.display = 'none';
       document.getElementById('jiraStatusChartConfig-license-text').style.display = 'none';
       document.getElementById('sonarChart-license-text').style.display = 'none';
-    }, 6000);
+    }, 8000);
   }
 
   loadSonarData() {
