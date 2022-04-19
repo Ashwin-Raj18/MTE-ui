@@ -214,12 +214,12 @@ sonarChartConfig = {
   }
 
   ngAfterViewInit() {
-    setTimeout(() => {
-      document.getElementById('bdMetricsChart-license-text').style.display = 'none';
-      document.getElementById('jiraTasksChart-license-text').style.display = 'none';
-      document.getElementById('jiraStatusChartConfig-license-text').style.display = 'none';
-      document.getElementById('sonarChart-license-text').style.display = 'none';
-    }, 8000);
+    // setTimeout(() => {
+    //   document.getElementById('bdMetricsChart-license-text').style.display = 'none';
+    //   document.getElementById('jiraTasksChart-license-text').style.display = 'none';
+    //   document.getElementById('jiraStatusChartConfig-license-text').style.display = 'none';
+    //   document.getElementById('sonarChart-license-text').style.display = 'none';
+    // }, 5000);
   }
 
   loadSonarData() {
@@ -382,6 +382,12 @@ sonarChartConfig = {
     this.getByMetrics();
     this.getBdMetrics();
     this.getJiraData();
+    setTimeout(() => {
+      document.getElementById('bdMetricsChart-license-text').style.display = 'none';
+      document.getElementById('jiraTasksChart-license-text').style.display = 'none';
+      document.getElementById('jiraStatusChartConfig-license-text').style.display = 'none';
+      document.getElementById('sonarChart-license-text').style.display = 'none';
+    }, 5000);
   }
 
 }
